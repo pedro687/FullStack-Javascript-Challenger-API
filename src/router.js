@@ -4,6 +4,8 @@ const multerConfig = require('./config/multer')
 
 const UserController = require('./app/controllers/UserController')
 const SessionController = require('./app/controllers/SessionController')
+const FileController = require('./app/controllers/FileController')
+
 const Auth = require('./app/middlewares/Auth')
 
 const routes = new Router()
@@ -15,8 +17,6 @@ routes.post('/session', SessionController.store)
 routes.use(Auth)
 routes.put('/user', UserController.updateUser)
 
-routes.post('/files', upload.single('file'), (req, res) => {
-    return res.json({ ok: true })
-})
+routes.post('/files', upload.single('file'), FileController.store)
 
 module.exports = routes
