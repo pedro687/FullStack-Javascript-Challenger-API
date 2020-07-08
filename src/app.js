@@ -1,5 +1,7 @@
 const express = require('express')
 const routes = require('./router')
+const path = require('path')
+
 require('./database/index')
 
 class App {
@@ -11,6 +13,10 @@ class App {
 
     middlewares() {
         this.server.use(express.json())
+        this.server.use(
+            '/providers',
+            express.static(path.resolve(__dirname, '..', 'tmp', 'uploads'))
+        )
     }
 
     router() {

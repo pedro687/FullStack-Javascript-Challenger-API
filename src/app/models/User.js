@@ -25,7 +25,7 @@ class User extends Model {
     }
 
     static association(models) {
-        this.belongsTo(models.Files, { foreignKey: 'avatar_id' })
+        this.belongsTo(models.Files, { foreignKey: 'avatar_id', as: 'avatar' })
     }
 
     async checkPassword(password) {

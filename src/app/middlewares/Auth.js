@@ -3,7 +3,9 @@ const authConfig = require('../../config/Auth')
 
 module.exports = async(req, res, next) => {
     const headerAuth = req.headers.authorization
-
+    if(!headerAuth) {
+        return res.status(401).json({ error: "Not Authorized, login is necessary" })
+    }
     const [, token] = headerAuth.split(" ")
     
     try{
