@@ -2,8 +2,32 @@ const Appointments = require('../models/Appointment')
 const {startOfHour, parseIso, isBefore} = require('date-fns')
 const Yup = require('yup')
 const User = require('../models/User')
+const Files = require('../models/Files')
 
 class AppointmentController {
+    async index(req, res) {
+        const appointment = await Appointments.findAll({
+            where: { user_id: req.userId, canceled_at: null },
+            attributes: ['id', 'date'],
+            include: [{
+                model: User,
+                as: 'provider',
+                attributes: ['id', 'name', 'email'],
+                include: [{
+                    model: Files,
+                    as: 'avatar',
+                    attributes: ['id', 'path', 'url']
+                }]
+            }]
+        })
+        
+        if(!appointment) {
+            return res.status(400).json({ message: "You dont have appointments" })
+        }
+
+        return res.status(200).json(appointment)
+    }
+    
     async store(req, res) {
         const Schema = Yup.object().shape({
             date: Yup.date().required(),
