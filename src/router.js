@@ -6,6 +6,7 @@ const UserController = require('./app/controllers/UserController')
 const SessionController = require('./app/controllers/SessionController')
 const FileController = require('./app/controllers/FileController')
 const ProviderController = require('./app/controllers/ProviderController')
+const AppointmentController = require('./app/controllers/AppointmentController')
 
 const Auth = require('./app/middlewares/Auth')
 
@@ -20,5 +21,6 @@ routes.put('/user', UserController.updateUser)
 
 routes.post('/files', upload.single('file'), FileController.store)
 routes.get('/providers', ProviderController.index)
+routes.post('/appointments', AppointmentController.store)
 
 module.exports = routes
