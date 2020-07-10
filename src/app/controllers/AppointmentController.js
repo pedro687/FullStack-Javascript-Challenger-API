@@ -1,8 +1,10 @@
 const Appointments = require('../models/Appointment')
-const {startOfHour, parseIso, isBefore} = require('date-fns')
+const {startOfHour, parseISO, isBefore, format} = require('date-fns')
+const pt = require('date-fns/locale/pt')
 const Yup = require('yup')
 const User = require('../models/User')
 const Files = require('../models/Files')
+const Notifications = require('../schemas/Notifications')
 
 class AppointmentController {
     async index(req, res) {
@@ -58,9 +60,9 @@ class AppointmentController {
         *check for past dates
         */
 
-        const hourStart = startOfHour(parseIso(date))
+        const hourStart = startOfHour(parseISO(date))
         if(isBefore(hourStart, new Date())) { 
-            return res.statu(401).json({error: "past date not are permited" })
+            return res.status(401).json({error: "past date not are permited" })
         }
 
         /* check for availibility
@@ -85,6 +87,21 @@ class AppointmentController {
             date: date
         })
 
+        /*
+        *  Notify Appointment Notification
+        */
+       const users = await User.findByPk(req.userId)
+        const formattedDate = format(
+            hourStart,
+            "'dia' dd 'de' MMM 'as' H:mm'h'",
+            {
+                locale: pt
+            }
+        )
+        await Notifications.create({
+            content: `Novo agendamento de ${users.name} para ${formattedDate}`,
+            user: provider_id,
+        })
         return res.json(appointments)
 
     }
