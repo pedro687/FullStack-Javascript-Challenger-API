@@ -7,6 +7,7 @@ const SessionController = require('./app/controllers/SessionController')
 const FileController = require('./app/controllers/FileController')
 const ProviderController = require('./app/controllers/ProviderController')
 const AppointmentController = require('./app/controllers/AppointmentController')
+const ScheduleControlller = require('./app/controllers/ScheduleController')
 
 const Auth = require('./app/middlewares/Auth')
 
@@ -26,5 +27,7 @@ routes.get('/providers', ProviderController.index)
 
 routes.get('/appointments', AppointmentController.index)
 routes.post('/appointments', AppointmentController.store)
+
+routes.get('/schedules', ScheduleControlller.index)
 
 module.exports = routes
