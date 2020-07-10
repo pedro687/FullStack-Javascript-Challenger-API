@@ -32,5 +32,6 @@ routes.post('/appointments', AppointmentController.store)
 routes.get('/schedules', ScheduleControlller.index)
 
 routes.get('/notifications', NotificationController.index)
+routes.put('/notifications/:id', NotificationController.updateNotification)
 
 module.exports = routes
