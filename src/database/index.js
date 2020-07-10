@@ -26,7 +26,8 @@ class Database {
     mongo() {
         this.mongoConnection = mongoose.connect(process.env.DATABASE_URL, {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            useFindAndModify: true
         })
         .then(() => { 
             console.log("Database Connected")
