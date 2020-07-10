@@ -105,6 +105,19 @@ class AppointmentController {
         return res.json(appointments)
 
     }
+
+    async delete(req, res) {
+        const verifyAppointment = await Appointments.findByPk(req.params.id)
+
+        if(verifyAppointment.user_id != req.userId) {
+            return res.status(401).json({ error: "you dont have permition" })
+        }
+
+        verifyAppointment.canceled_at = new Date()
+        verifyAppointment.save()
+
+        return res.json(verifyAppointment)
+    }
 }
 
 module.exports = new AppointmentController()
