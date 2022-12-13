@@ -19,7 +19,7 @@
     "yup": "^0.29.1"
   },
   "devDependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "nodemon": "^2.0.4",
     "sequelize-cli": "^6.1.0"
   }
